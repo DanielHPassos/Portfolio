@@ -1,0 +1,131 @@
+﻿@using Microsoft.Ajax.Utilities
+@model Portfolio.Models.Mensagem
+<h2>Contato</h2>
+
+@*@using (Html.BeginForm("Contact", "Home", FormMethod.Post, new { @class = "form-horizontal", @role = "form", id = "frmcontato", name = "frmcontato" }))
+    {*@
+@Html.ValidationSummary(true)
+@*<form class="form-horizontal" role="form">*@
+<div class="form-group">
+    <label class="control-label col-sm-2">Nome:</label>
+    <div class="col-sm-10">
+        @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", placeholder = "Nome", @id = "Nome" })
+        @*@Html.EditorFor(model => model.Nome)*@
+        @Html.ValidationMessageFor(model => model.Nome)
+        <br />
+        @*@Html.TextBox("nome", Model.Nome)*@
+        @*<input type="email" class="form-control" id="nome" placeholder="Nome" required>*@
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-2">Email:</label>
+    <div class="col-sm-10">
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email", @id = "Email" })
+        @*@Html.EditorFor(model => model.Email)*@
+        @Html.ValidationMessageFor(model => model.Email)
+        <br />
+        @*@Html.TextBox("email", Model.Email)*@
+        @*<input type="email" class="form-control" id="email" placeholder="Email" required>*@
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-sm-2">Mensagem:</label>
+    <div class="col-sm-10">
+        @*@Html.TextBoxFor(model => model.Texto, new { @class = "form-control", placeholder = "Digite seu texto aqui" })*@
+        @Html.TextAreaFor(model => model.Texto, new { @class = "form-control", placeholder = "Digite sua mensagem aqui", rows = 5, @id = "Texto" })
+        @*@Html.EditorFor(model => model.Texto)*@
+        @Html.ValidationMessageFor(model => model.Texto)
+        <br />
+        @*@Html.TextBox("texto", Model.Texto)*@
+        @*@Html.TextArea("mensagem", new {@class = "form-control", required = true, placeholder = "Digite sua mensagem", id = "mensagem"})*@
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-4">
+        <div class="g-recaptcha" data-sitekey="6LfkGwwTAAAAAOasptgHFgw9A8fSmpN6DuAx-UOF"></div>
+        <br />
+        @*<input type="submit" value="Submit" onclick="mostrar">*@
+        <button type="button" @*id="btnEnviarEmail"*@ class="btn btn-info btn-lg">Enviar</button>
+        <!--
+        <!-- Modal -->
+        <!-- <div id="meuModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <!-- <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="modalH"><strong></strong></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <div class="alert alert-success">
+                        <span id="modelS"></span>
+                    </div>
+                    @*<div class="alert alert-danger">
+                                 <span id="modelF"></span>
+                             </div>*@
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+        </div>
+        </div>
+        <!---->
+
+    </div>
+</div>
+
+
+@*</form>*@
+<br />
+<div class="row">
+    <div class="col-md-offset-2" id="loading" style="display: none;">
+        <i class="fa fa-spinner fa-pulse fa-2x"></i>
+    </div>
+</div>
+
+
+
+@*}*@
+
+
+<script>
+    //$(document).ready(function() {
+    //    $("#btnEnviarEmail").click(function() {
+    //        $.post(
+    //            "/Home/Contact",
+    //            {
+    //                Nome: $("#Nome").val(),
+    //                Email: $("#Email").val(),
+    //                Texto: $("#Texto").val()
+    //    },
+    //            function(data,status) {
+    //                alert(data.mensagem);
+    //            }
+    //        );
+    //    });
+    //});
+    //function sucesso(data) {
+    //    alert(data.mensagem);
+    //    //$("#modelS").text(data.mensagem.val());
+    //    //$("#meuModal").modal(show);
+    //};
+
+    //function falha(data) {
+    //    alert(data.mensagem);
+    //};
+
+</script>
+
+
+
+
+@section scripts{
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

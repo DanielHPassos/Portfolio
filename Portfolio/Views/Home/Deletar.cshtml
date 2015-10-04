@@ -1,0 +1,89 @@
+﻿@using Portfolio.Models.Entities
+@model Cliente
+
+@{
+    ViewBag.Title = "Deletar";
+}
+
+<h2>Deletar</h2>
+
+<h3>Você tem certeza que deseja deletar?</h3>
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    @*@using (Html.BeginForm("DeletarConfirma", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()*@
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ClienteId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClienteId)
+            @Html.HiddenFor(model => model.ClienteId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Senha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+
+    </dl>
+
+    <div class="form-actions no-color">
+        <input id="btnDeletar" type="button" value="Deletar" class="btn btn-default" /> |
+
+    </div>
+
+    @*}*@
+</div>
+@Html.ActionLink("Voltar", "Listar")
+<script>
+    $(document).ready(function () {
+        $("#btnDeletar").click(function () {
+            $.post("/Home/DeletarConfirma",
+            {
+                id: $("#ClienteId").val()
+            },
+            function (data, status) {
+                alert("Mensagem: " + data.mensagem);
+            });
+        });
+    })
+</script>

@@ -1,0 +1,48 @@
+﻿
+<!DOCTYPE html>
+<html pt-br>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        @{
+            ViewBag.Title = "_Layout.cshtml";
+        }
+    </title>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.intellisense.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="container">
+    @{
+        if (ViewBag.ReiniciarViewDataDictionary == true)
+        {
+            Html.RenderPartial("_Painel", new ViewDataDictionary());
+        }
+        else
+        {
+            Html.RenderPartial("_Painel");
+        }
+    }
+    @RenderBody()
+
+    @{
+        Html.RenderPartial("_Footer", new ViewDataDictionary());
+    }
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

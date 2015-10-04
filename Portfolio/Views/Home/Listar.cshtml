@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Portfolio.Models.Entities.Cliente>
+
+<p>
+    @Html.ActionLink("Create New", "Criar", "Home")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Senha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Senha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Editar", new { id = item.ClienteId }) |
+                @Html.ActionLink("Detailhes", "Detalhes", new { id = item.ClienteId }) |
+                @Html.ActionLink("Deletar", "Deletar", new { id = item.ClienteId })
+            </td>
+        </tr>
+    }
+
+</table>
+@{ ViewBag.ReiniciarViewDataDictionary = true; }

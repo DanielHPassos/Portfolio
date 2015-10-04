@@ -1,0 +1,42 @@
+﻿@using Portfolio.Models.Entities
+@model Cliente
+<div class="header clearfix">
+    <nav>
+        <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active">
+                @Html.ActionLink("Home", "Index", "Home", null, new { @id = "home" })
+
+            </li>
+            <li role="presentation">
+                @Html.ActionLink("Sobre", "About", "Home", null, new { @id = "about" })
+
+            </li>
+            <li role="presentation">
+                @*@Html.ActionLink("Contato","PartialContact",null,new{@id="contact"})*@
+                @Html.ActionLink("Contato", "Contact", "Home", null, new { @id = "contact" })
+            </li>
+            <li role="presentation">
+                @if (Session["User"] == null)
+                {
+                    @Html.ActionLink("Login", "Login", "Home", null, new { @id = "login" })
+                }
+                else if (((Cliente)Session["User"]).Role == "Admin")
+                {
+                <li role="presentation">
+                    @Html.ActionLink("Painel de Controle", "Listar", "Home")
+                </li>
+                    @Html.ActionLink("Logado como Adm (LogOff)", "LogOff", "Home", null, new { @id = "login" })
+                }
+                else if (((Cliente)Session["User"]).Role == "Member")
+                {
+                    @Html.ActionLink(String.Format("Logado como {0} (LogOff)", ((Cliente)Session["User"]).Nome), "LogOff", "Home", null, new { @id = "login" })
+                }
+
+                </li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">
+            <i>Portfólio pessoal</i>
+        </h3>
+    </div>
+    <hr />
