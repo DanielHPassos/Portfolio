@@ -1,53 +1,90 @@
-﻿@model IEnumerable<Portfolio.Models.Entities.Cliente>
+﻿@*@model IEnumerable<Portfolio.Models.Entities.Cliente>*@
 
-<p>
-    @Html.ActionLink("Create New", "Criar", "Home")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Login)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Senha)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <a href="@Url.Action("Criar", "Home")"><input type="button" class="btn btn-success btn-md col-md-6" value="Criar novo cliente"/></a>
+    <br/>
+    <br />
+    <input type="button" class="btn btn-primary btn-md col-md-6" id="btnCarregarLista" value="Carregar lista"/>
+    
+</div>
+    <br />
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Login)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Senha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Editar", new { id = item.ClienteId }) |
-                @Html.ActionLink("Detailhes", "Detalhes", new { id = item.ClienteId }) |
-                @Html.ActionLink("Deletar", "Deletar", new { id = item.ClienteId })
-            </td>
-        </tr>
-    }
+<table id="tbl" class="table">
+
+
+    @*@foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Senha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { id = item.ClienteId }) |
+                    @Html.ActionLink("Detalhes", "Detalhes", new { id = item.ClienteId }) |
+                    @Html.ActionLink("Deletar", "Deletar", new { id = item.ClienteId })
+                </td>
+            </tr>
+        }*@
 
 </table>
-@{ ViewBag.ReiniciarViewDataDictionary = true; }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON(
+                "/Home/ListarClientes",
+                null,
+                function (data) {
+                    var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
+                    table.html("");
+                    table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th>Editar</th>" + "<th>Detalhes</th>" + "<th>Deletar</th>" + "</tr>");
+
+                    //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
+                    $.each(
+                        data,
+                        function (i, item) {
+                            table.append("<tr id = "+ i+ ">" +
+                                "<td>" + item.Nome + "</td>" +
+                                "<td>" + item.Email + "</td>" +
+                                "<td>" + item.Login + "</td>" +
+                                "<td>" + item.Senha + "</td>" +
+                                "<td>" + item.Role + "</td>" +
+                                "<td>" +
+                                "<a href='Editar/" + item.ClienteId + "'>Editar</a>" +
+                                " | " + "<a href='Detalhes/" + item.ClienteId + "'>Detalhes</a>" +
+                                " | " + "<a href='Deletar/" + item.ClienteId + "'>Deletar</a>" +
+                                "</td>" +
+                                "</tr>");
+                        });
+                });
+        $('#btnCarregarLista').click(function ()
+        {
+            $.getJSON(
+                "/Home/ListarClientes",
+                null,
+                function (data) {
+                    var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
+                    table.html("");
+                    table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "</tr>");
+
+                    //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
+                    $.each(
+                        data,
+                        function (i, item) {
+                            table.append("<tr>" + "<td>" + item.Nome + "</td>" + "<td>" + item.Email + "</td>" + "<td>" + item.Login + "</td>" + "<td>" + item.Senha + "</td>" + "<td>" + item.Role + "</td>" + "</tr>");
+                        });
+            });
+        });
+    });
+</script>

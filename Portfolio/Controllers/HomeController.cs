@@ -84,25 +84,18 @@ namespace Portfolio.Controllers
         {
             return View(clienteRepository.Buscar(id));
         }
-
         public ActionResult Editar(int id)
         {
             var c = clienteRepository.Buscar(id);
+            
             return View(c);
         }
         [HttpPost]
-        public JsonResult EditarConfirma(int id, string nome, string email, string login, string senha, string role)
+        public JsonResult EditarConfirma(Cliente c)
         {
 
-            clienteRepository.Update(new Cliente()
-            {
-                ClienteId = id,
-                Nome = nome,
-                Email = email,
-                Login = login,
-                Senha = senha,
-                Role = role
-            });
+            clienteRepository.Update(c);
+
             return Json(new { mensagem = "Editado com sucesso" });
         }
 
@@ -112,17 +105,10 @@ namespace Portfolio.Controllers
         }
 
         [HttpPost]
-        public JsonResult Criar(string nome, string email, string login, string senha, string role)
+        public JsonResult Criar(Cliente c)
         {
 
-            clienteRepository.Add(new Cliente()
-            {
-                Nome = nome,
-                Email = email,
-                Login = login,
-                Senha = senha,
-                Role = role
-            });
+            clienteRepository.Add(c);
             return Json(new { mensagem = "Criado com sucesso" });
         }
 
@@ -140,8 +126,13 @@ namespace Portfolio.Controllers
         [HttpGet]
         public ActionResult Listar()
         {
-            ViewBag.ReiniciarViewDataDictionary = true;
-            return View(clienteRepository.Listar());
+            return View();
+        }
+        [HttpGet]
+        public JsonResult ListarClientes()
+        {
+            //ViewBag.ReiniciarViewDataDictionary = true;
+            return Json(clienteRepository.Listar(),JsonRequestBehavior.AllowGet);
         }
     }
 }

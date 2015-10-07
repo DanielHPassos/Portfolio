@@ -80,7 +80,7 @@
     }
     else
     {
-        @Html.ActionLink("Voltar", "Detalhes")
+        @Html.ActionLink("Voltar", "Detalhes",new{id=Model.ClienteId})
     }
 
 </div>
@@ -90,12 +90,12 @@
             $.post(
                 "/Home/EditarConfirma",
                 {
-                    id: $("#ClienteId").val(),
-                    nome: $("#Nome").val(),
-                    email: $("#Email").val(),
-                    login: $("#Login").val(),
-                    senha: $("#Senha").val(),
-                    role: $("#Role").val()
+                    ClienteId: $("#ClienteId").val(),
+                    Nome: $("#Nome").val(),
+                    Email: $("#Email").val(),
+                    Login: $("#Login").val(),
+                    Senha: $("#Senha").val(),
+                    Role: $("#Role").val()
                 },
                     function (data, status) {
                         alert("Mensagem: " + data.mensagem);

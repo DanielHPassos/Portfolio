@@ -1,4 +1,5 @@
-﻿
+﻿@using Portfolio.Models.Entities
+
 <!DOCTYPE html>
 <html pt-br>
 <head>
@@ -27,20 +28,25 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body class="container">
+    @*@{
+            if (ViewBag.ReiniciarViewDataDictionary == true)
+            {
+        @Html.RenderPartial("_Painel"), new ViewDataDictionary());
+        }
+            else
+            {
+    *@
     @{
-        if (ViewBag.ReiniciarViewDataDictionary == true)
-        {
-            Html.RenderPartial("_Painel", new ViewDataDictionary());
-        }
-        else
-        {
-            Html.RenderPartial("_Painel");
-        }
+        Html.RenderPartial("_Painel",new Cliente());
     }
+
+    @*}
+        }*@
     @RenderBody()
 
     @{
-        Html.RenderPartial("_Footer", new ViewDataDictionary());
+        Html.RenderPartial("_Footer");
+    //Html.RenderPartial("_Footer", new ViewDataDictionary());
     }
 
     @RenderSection("scripts", required: false)

@@ -45,7 +45,7 @@
         <div class="g-recaptcha" data-sitekey="6LfkGwwTAAAAAOasptgHFgw9A8fSmpN6DuAx-UOF"></div>
         <br />
         @*<input type="submit" value="Submit" onclick="mostrar">*@
-        <button type="button" @*id="btnEnviarEmail"*@ class="btn btn-info btn-lg">Enviar</button>
+        <button type="button" id="btnEnviarEmail" class="btn btn-info btn-lg">Enviar</button>
         <!--
         <!-- Modal -->
         <!-- <div id="meuModal" class="modal fade" role="dialog">
@@ -94,21 +94,28 @@
 
 
 <script>
-    //$(document).ready(function() {
-    //    $("#btnEnviarEmail").click(function() {
-    //        $.post(
-    //            "/Home/Contact",
-    //            {
-    //                Nome: $("#Nome").val(),
-    //                Email: $("#Email").val(),
-    //                Texto: $("#Texto").val()
-    //    },
-    //            function(data,status) {
-    //                alert(data.mensagem);
-    //            }
-    //        );
-    //    });
-    //});
+    $(document).ready(function () {
+        $("#btnEnviarEmail").click(function () {
+            $.post(
+                "/Home/Contact",
+                {
+                    Nome: $("#Nome").val(),
+                    Email: $("#Email").val(),
+                    Texto: $("#Texto").val()
+                    //Para passar objeto complexo, os nomes das propriedades do objeto devem ser igual às variáveis que vão para o back-end
+                    //Exemplo
+                    //Bac-end espera objeto Mensagem { Nome, Email, Texto}
+                    //No jquery deverá ir...
+                    //          Nome: $("#Nome").val(),
+                    //          Email: $("#Email").val(),
+                    //          Texto: $("#Texto").val()
+                },
+                function (data, status) {
+                    alert(data.mensagem);
+                }
+            );
+        });
+    });
     //function sucesso(data) {
     //    alert(data.mensagem);
     //    //$("#modelS").text(data.mensagem.val());
