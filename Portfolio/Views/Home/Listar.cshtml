@@ -1,13 +1,13 @@
 ﻿@*@model IEnumerable<Portfolio.Models.Entities.Cliente>*@
 
 <div class="row">
-    <a href="@Url.Action("Criar", "Home")"><input type="button" class="btn btn-success btn-md col-md-6" value="Criar novo cliente"/></a>
-    <br/>
+    <a href="@Url.Action("Criar", "Home")"><input type="button" class="btn btn-success btn-md col-md-6" value="Criar novo cliente" /></a>
     <br />
-    <input type="button" class="btn btn-primary btn-md col-md-6" id="btnCarregarLista" value="Carregar lista"/>
-    
+    <br />
+    <input type="button" class="btn btn-primary btn-md col-md-6" id="btnCarregarLista" value="Carregar lista" />
+
 </div>
-    <br />
+<br />
 
 <table id="tbl" class="table">
 
@@ -39,52 +39,132 @@
         }*@
 
 </table>
-
+@*<div id="modal" title="Mensagem">
+        <p>teste</p>
+    </div>*@
+<div id="loading"><img src="~/Content/Imagens/loader.gif" /></div>
 <script type="text/javascript">
+    //$("#modal").dialog({
+    //    autoOpen: false,
+    //    width: 400,
+    //    height: 400,
+    //    show: { effect: "shake", duration: 100 },
+    //    hide: { effect: "explode", duration: 1000 }
+    //});
+    //$(function () {
     $(document).ready(function () {
-        $.getJSON(
+        table = $("#tbl");
+        table.html("");
+        table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
+        
+        $.ajax({
+            url: "http://localhost:1297/api/Values",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            datatype: 'json',
+            cache: false,
+            success: function (data) {
+                var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
+                        table.html("");
+                        table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
+
+                        //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
+                        $.each(
+                            data,
+                            function (i, item) {
+                                table.append("<tr id = " + i + ">" +
+                                    "<td>" + item.Nome + "</td>" +
+                                    "<td>" + item.Email + "</td>" +
+                                    "<td>" + item.Login + "</td>" +
+                                    "<td>" + item.Senha + "</td>" +
+                                    "<td>" + item.Role + "</td>" +
+                                    "<td>" + "<a href='Editar/" + item.ClienteId + "'>Editar</a>" + "</td>" +
+                                    "<td>" + "<a href='Detalhes/" + item.ClienteId + "'>Detalhes</a>" + "</td>" +
+                                    "<td>" + "<a href='Deletar/" + item.ClienteId + "'>Deletar</a>" + "</td>" +
+                                    "</tr>");
+                            });
+            },
+            error: function(msg) {
+                 alert("Teste: " + msg);
+            }
+        });
+        //--------------------------------------------------------------------------------------------------------------------------------------------------
+        //$.getJSON(
+        //    "/Home/ListarClientes",
+        //    null,
+        //    function (data) {
+        //        var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
+        //        table.html("");
+        //        table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
+
+        //        //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
+        //        $.each(
+        //            data,
+        //            function (i, item) {
+        //                table.append("<tr id = " + i + ">" +
+        //                    "<td>" + item.Nome + "</td>" +
+        //                    "<td>" + item.Email + "</td>" +
+        //                    "<td>" + item.Login + "</td>" +
+        //                    "<td>" + item.Senha + "</td>" +
+        //                    "<td>" + item.Role + "</td>" +
+        //                    "<td>" + "<a href='Editar/" + item.ClienteId + "'>Editar</a>" + "</td>" +
+        //                    "<td>" + "<a href='Detalhes/" + item.ClienteId + "'>Detalhes</a>" + "</td>" +
+        //                    "<td>" + "<a href='Deletar/" + item.ClienteId + "'>Deletar</a>" + "</td>" +
+        //                    "</tr>");
+        //            });
+        //    });
+        //--------------------------------------------------------------------------------------------------------------------------------------------------
+        $('#btnCarregarLista').click(function () {
+            $("#modal").dialog("open");
+            $.getJSON(
                 "/Home/ListarClientes",
                 null,
                 function (data) {
-                    var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
+                    var table = $('#tbl');
                     table.html("");
-                    table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th>Editar</th>" + "<th>Detalhes</th>" + "<th>Deletar</th>" + "</tr>");
+                    table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
 
-                    //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
                     $.each(
                         data,
                         function (i, item) {
-                            table.append("<tr id = "+ i+ ">" +
+                            table.append("<tr id = " + i + ">" +
                                 "<td>" + item.Nome + "</td>" +
                                 "<td>" + item.Email + "</td>" +
                                 "<td>" + item.Login + "</td>" +
                                 "<td>" + item.Senha + "</td>" +
                                 "<td>" + item.Role + "</td>" +
-                                "<td>" +
-                                "<a href='Editar/" + item.ClienteId + "'>Editar</a>" +
-                                " | " + "<a href='Detalhes/" + item.ClienteId + "'>Detalhes</a>" +
-                                " | " + "<a href='Deletar/" + item.ClienteId + "'>Deletar</a>" +
-                                "</td>" +
+                                "<td>" + "<a href='Editar/" + item.ClienteId + "'>Editar</a>" + "</td>" +
+                                "<td>" + "<a href='Detalhes/" + item.ClienteId + "'>Detalhes</a>" + "</td>" +
+                                "<td>" + "<a href='Deletar/" + item.ClienteId + "'>Deletar</a>" + "</td>" +
                                 "</tr>");
                         });
                 });
-        $('#btnCarregarLista').click(function ()
-        {
-            $.getJSON(
-                "/Home/ListarClientes",
-                null,
-                function (data) {
-                    var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
-                    table.html("");
-                    table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "</tr>");
-
-                    //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
-                    $.each(
-                        data,
-                        function (i, item) {
-                            table.append("<tr>" + "<td>" + item.Nome + "</td>" + "<td>" + item.Email + "</td>" + "<td>" + item.Login + "</td>" + "<td>" + item.Senha + "</td>" + "<td>" + item.Role + "</td>" + "</tr>");
-                        });
-            });
         });
+        //---------------------------------------------------------------------------------------------------------------------------------------------------
+        $(document).ajaxStart(function () {
+            $('#loading').show();
+        });
+        $(document).ajaxStop(function () {
+            $('#loading').hide();
+        });
+        //---------------------------------------------------------------------------------------------------------------------------------------------------
     });
 </script>
+<style type="text/css">
+    #loading {
+        display: none;
+        background-color: gray;
+        z-index: 999999;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-top: 300px;
+        filter: alpha(opacity=75); /* internet explorer */
+        -khtml-opacity: 0.75; /* khtml, old safari */
+        -moz-opacity: 0.75; /* mozilla, netscape */
+        opacity: 0.75; /* fx, safari, opera */
+    }
+</style>

@@ -131,7 +131,6 @@ namespace Portfolio.Controllers
         [HttpGet]
         public JsonResult ListarClientes()
         {
-            //ViewBag.ReiniciarViewDataDictionary = true;
             return Json(clienteRepository.Listar(),JsonRequestBehavior.AllowGet);
         }
     }

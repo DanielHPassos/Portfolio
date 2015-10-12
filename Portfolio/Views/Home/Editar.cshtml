@@ -74,19 +74,23 @@
 @*}*@
 
 <div>
-    @if (((Cliente)Session["User"]).Role == "Admin")
+    @if (((Cliente) Session["User"]).Role == "Admin")
     {
         @Html.ActionLink("Voltar", "Listar")
     }
     else
     {
-        @Html.ActionLink("Voltar", "Detalhes",new{id=Model.ClienteId})
+        @Html.ActionLink("Voltar", "Detalhes", new {id = Model.ClienteId})
     }
 
 </div>
+<div id="modalEditar" title="Mensagem">
+    These items will be permanently deleted and cannot be recovered. Are you sure?
+</div>
 <script>
+    
     $(document).ready(function() {
-        $("#btnEditar").click(function () {
+        $("#btnEditar").click(function() {
             $.post(
                 "/Home/EditarConfirma",
                 {
@@ -97,10 +101,12 @@
                     Senha: $("#Senha").val(),
                     Role: $("#Role").val()
                 },
-                    function (data, status) {
-                        alert("Mensagem: " + data.mensagem);
-                    }
-                );
+                function(data, status) {
+                    alert(data.mensagem);
+
+
+                }
+            );
         });
-    })
+    });
 </script>
