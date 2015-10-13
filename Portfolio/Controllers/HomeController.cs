@@ -21,7 +21,9 @@ namespace Portfolio.Controllers
 {
     public class HomeController : Controller
     {
-        ClienteRepository clienteRepository = new ClienteRepository();
+        readonly ClienteRepository clienteRepository = new ClienteRepository();
+        private const string url = "http://localhost:1297/api/Cliente";
+
         // GET: Home
         public ActionResult Index()
         {
@@ -133,22 +135,27 @@ namespace Portfolio.Controllers
         public JsonResult ListarClientes()
         {
             List<Cliente> lista;
-            var url = "http://localhost:1297/api/Values";
+            
 
-            using (var client = new HttpClient())
+            try
             {
-                client.DefaultRequestHeaders.Clear();
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Clear();
 
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage responde = client.GetAsync(url).Result;
+                    HttpResponseMessage responde = client.GetAsync(url).Result;
 
-                responde.EnsureSuccessStatusCode();
+                    responde.EnsureSuccessStatusCode();
 
-                lista = responde.Content.ReadAsAsync<List<Cliente>>().Result;
+                    lista = responde.Content.ReadAsAsync<List<Cliente>>().Result;
+                }
             }
-
-
+            catch (Exception)
+            {
+                return Json(clienteRepository.Listar(), JsonRequestBehavior.AllowGet);
+            }
 
             return Json(lista, JsonRequestBehavior.AllowGet);
             //return Json(clienteRepository.Listar(),JsonRequestBehavior.AllowGet);

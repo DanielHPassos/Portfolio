@@ -291,6 +291,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\EntityConfiguration\" />
+    <Folder Include="Views\Cliente\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
