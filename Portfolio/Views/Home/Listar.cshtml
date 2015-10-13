@@ -52,42 +52,44 @@
     //    hide: { effect: "explode", duration: 1000 }
     //});
     //$(function () {
-    $(document).ready(function () {
-        table = $("#tbl");
-        table.html("");
-        table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
-        
-        $.ajax({
-            url: "http://localhost:1297/api/Values",
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            datatype: 'json',
-            cache: false,
-            success: function (data) {
-                var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
-                        table.html("");
-                        table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
 
-                        //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
-                        $.each(
-                            data,
-                            function (i, item) {
-                                table.append("<tr id = " + i + ">" +
-                                    "<td>" + item.nome + "</td>" +
-                                    "<td>" + item.email + "</td>" +
-                                    "<td>" + item.login + "</td>" +
-                                    "<td>" + item.senha + "</td>" +
-                                    "<td>" + item.role + "</td>" +
-                                    "<td>" + "<a href='Editar/" + item.clienteId + "'>Editar</a>" + "</td>" +
-                                    "<td>" + "<a href='Detalhes/" + item.clienteId + "'>Detalhes</a>" + "</td>" +
-                                    "<td>" + "<a href='Deletar/" + item.clienteId + "'>Deletar</a>" + "</td>" +
-                                    "</tr>");
-                            });
-            },
-            error: function(msg) {
-                 alert("Teste: " + msg);
-            }
-        });
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------
+    $(document).ready(function () {
+        //table = $("#tbl");
+        //table.html("");
+        //table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
+        
+        //$.ajax({
+        //    url: "http://localhost:1297/api/Values",
+        //    type: "GET",
+        //    contentType: "application/json; charset=utf-8",
+        //    datatype: 'json',
+        //    cache: false,
+        //    success: function (data) {
+        //        var table = $('#tbl'); //Está referenciando ao id, logo o "#tbl" não precisa de "html" ao final, e nem "html()"
+        //                table.html("");
+        //                table.append("<tr>" + "<th>Nome</th>" + "<th>Email</th>" + "<th>Login</th>" + "<th>Senha</th>" + "<th>Role</th>" + "<th colspan = 3 >Opções</th>" + "</tr>");
+
+        //                //Para cada item do retorno chamado "data" (data é uma lista), há um índice "i" e um item da lista chamado "item"
+        //                $.each(
+        //                    data,
+        //                    function (i, item) {
+        //                        table.append("<tr id = " + i + ">" +
+        //                            "<td>" + item.nome + "</td>" +
+        //                            "<td>" + item.email + "</td>" +
+        //                            "<td>" + item.login + "</td>" +
+        //                            "<td>" + item.senha + "</td>" +
+        //                            "<td>" + item.role + "</td>" +
+        //                            "<td>" + "<a href='Editar/" + item.clienteId + "'>Editar</a>" + "</td>" +
+        //                            "<td>" + "<a href='Detalhes/" + item.clienteId + "'>Detalhes</a>" + "</td>" +
+        //                            "<td>" + "<a href='Deletar/" + item.clienteId + "'>Deletar</a>" + "</td>" +
+        //                            "</tr>");
+        //                    });
+        //    },
+        //    error: function(msg) {
+        //         alert("Teste: " + msg);
+        //    }
+        //});
         //--------------------------------------------------------------------------------------------------------------------------------------------------
         //$.getJSON(
         //    "/Home/ListarClientes",
@@ -112,7 +114,7 @@
         //                    "<td>" + "<a href='Deletar/" + item.ClienteId + "'>Deletar</a>" + "</td>" +
         //                    "</tr>");
         //            });
-        //    });
+            //});
         //--------------------------------------------------------------------------------------------------------------------------------------------------
         $('#btnCarregarLista').click(function () {
             $("#modal").dialog("open");

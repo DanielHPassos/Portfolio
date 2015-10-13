@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Permissions;
 using System.Threading.Tasks;
 using System.Web;
@@ -131,7 +132,26 @@ namespace Portfolio.Controllers
         [HttpGet]
         public JsonResult ListarClientes()
         {
-            return Json(clienteRepository.Listar(),JsonRequestBehavior.AllowGet);
+            List<Cliente> lista;
+            var url = "http://localhost:1297/api/Values";
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage responde = client.GetAsync(url).Result;
+
+                responde.EnsureSuccessStatusCode();
+
+                lista = responde.Content.ReadAsAsync<List<Cliente>>().Result;
+            }
+
+
+
+            return Json(lista, JsonRequestBehavior.AllowGet);
+            //return Json(clienteRepository.Listar(),JsonRequestBehavior.AllowGet);
         }
     }
 }
